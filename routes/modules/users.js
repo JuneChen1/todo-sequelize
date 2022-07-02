@@ -3,7 +3,6 @@ const router = express.Router()
 const bcrypt = require('bcryptjs')
 const passport = require('passport')
 const db = require('../../models')
-const Todo = db.Todo
 const User = db.User
 
 router.get('/login', (req, res) => {
@@ -25,7 +24,7 @@ router.post('/register', (req, res) => {
   if (!name || !email || !password || !confirmPassword) {
     errors.push({ message: '所有欄位都是必填' })
   }
-  if(password !== confirmPassword) {
+  if (password !== confirmPassword) {
     errors.push({ message: '密碼與確認密碼不相符' })
   }
   const errorMessage = {
