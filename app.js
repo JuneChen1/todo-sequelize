@@ -8,11 +8,10 @@ const flash = require('connect-flash')
 const app = express()
 const PORT = 3000
 
-
-
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
+app.use(methodOverride('_method'))
 app.use(session({
   secret: 'ThisIsMySecret',
   resave: false,
