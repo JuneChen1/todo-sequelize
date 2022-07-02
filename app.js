@@ -6,14 +6,15 @@ const session = require('express-session')
 const usePassport = require('./config/passport')
 const flash = require('connect-flash')
 const app = express()
-const PORT = 3000
+
+require('dotenv').config()
 
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
 app.use(methodOverride('_method'))
 app.use(session({
-  secret: 'ThisIsMySecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))
@@ -31,6 +32,6 @@ app.use((req, res, next) => {
 
 app.use(routes)
 
-app.listen(PORT, () => {
-  console.log(`App is running on http://localhost:${PORT}`)
+app.listen(process.env.PORT, () => {
+  console.log(`App is running on http://localhost:${process.env.PORT}`)
 })
