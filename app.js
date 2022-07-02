@@ -4,6 +4,7 @@ const methodOverride = require('method-override')
 const routes = require('./routes')
 const session = require('express-session')
 const usePassport = require('./config/passport')
+const flash = require('connect-flash')
 const app = express()
 const PORT = 3000
 
@@ -19,6 +20,14 @@ app.use(session({
 }))
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
+app.use(flash())
+app.use((req, res, next) => {
+  res.locals.isAutenticated = req.isAuthenticated()
+  res.locals.user = req.user
+  res.locals.success_msg = req.flash('success_msg')
+  res.locals.warning_msg = req.flash('warning_msg')
+  next()
+})
 
 app.use(routes)
 
